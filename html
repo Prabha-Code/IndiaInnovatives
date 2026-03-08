@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UrbanProof Sentinel Mesh</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+</head>
+
+<body class="bg-gray-100">
+
+<!-- HEADER -->
+
+<header class="bg-gray-900 text-white p-4 flex justify-between">
+
+<h1 class="text-2xl font-bold">
+UrbanProof Sentinel Mesh
+</h1>
+
+<div>
+City Pollution Intelligence System
+</div>
+
+</header>
+
+
+<div class="grid grid-cols-12 gap-4 p-4">
+
+<!-- LEFT PANEL -->
+
+<div class="col-span-3 space-y-4">
+
+<!-- KPI Cards -->
+
+<div class="bg-white p-4 rounded shadow">
+
+<h2 class="text-lg font-bold mb-2">
+Current PM2.5
+</h2>
+
+<p class="text-3xl text-red-600 font-bold">
+142 µg/m³
+</p>
+
+<p class="text-sm text-gray-500">
+Above safe limit
+</p>
+
+</div>
+
+<div class="bg-white p-4 rounded shadow">
+
+<h2 class="text-lg font-bold mb-2">
+Active Hotspots
+</h2>
+
+<p class="text-3xl text-orange-600 font-bold">
+6
+</p>
+
+</div>
+
+<div class="bg-white p-4 rounded shadow">
+
+<h2 class="text-lg font-bold mb-2">
+Inspections Today
+</h2>
+
+<p class="text-3xl text-green-600 font-bold">
+12
+</p>
+
+</div>
+
+
+<!-- Evidence Ladder -->
+
+<div class="bg-white p-4 rounded shadow">
+
+<h2 class="text-lg font-bold mb-3">
+Evidence Ladder
+</h2>
+
+<ul class="space-y-2 text-sm">
+
+<li class="text-yellow-600">
+Alert > 0.40 Probability
+</li>
+
+<li class="text-blue-600">
+Inspection > 0.60 Probability
+</li>
+
+<li class="text-red-600">
+Enforcement > 0.85 Probability
+</li>
+
+</ul>
+
+</div>
+
+
+</div>
+
+
+
+<!-- CENTER MAP -->
+
+<div class="col-span-6 bg-white rounded shadow p-3">
+
+<h2 class="font-bold mb-2">
+City Pollution Map
+</h2>
+
+<div id="map" style="height:500px"></div>
+
+</div>
+
+
+
+<!-- RIGHT PANEL -->
+
+<div class="col-span-3 space-y-4">
+
+<!-- Hotspot Card -->
+
+<div class="bg-white p-4 rounded shadow">
+
+<h2 class="text-lg font-bold mb-3">
+Hotspot Card
+</h2>
+
+<p>
+Location: <b>Anna Nagar</b>
+</p>
+
+<p>
+PM2.5 Spike: <b>160</b>
+</p>
+
+<p>
+Wind Direction: <b>South-East</b>
+</p>
+
+<p class="mt-2 text-sm">
+Recommended Action:
+<span class="text-red-600 font-bold">
+Inspection Required
+</span>
+</p>
+
+</div>
+
+
+<!-- Candidate Source Ranking -->
+
+<div class="bg-white p-4 rounded shadow">
+
+<h2 class="text-lg font-bold mb-3">
+Candidate Sources
+</h2>
+
+<table class="w-full text-sm">
+
+<tr class="font-bold">
+<td>Site</td>
+<td>Probability</td>
+</tr>
+
+<tr>
+<td>Construction Site A</td>
+<td class="text-red-600">0.82</td>
+</tr>
+
+<tr>
+<td>Garbage Burning Area</td>
+<td>0.65</td>
+</tr>
+
+<tr>
+<td>Traffic Corridor</td>
+<td>0.48</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<!-- Officer Action -->
+
+<div class="bg-white p-4 rounded shadow">
+
+<h2 class="text-lg font-bold mb-3">
+Officer Action
+</h2>
+
+<button class="bg-blue-600 text-white px-4 py-2 rounded w-full mb-2">
+Assign Inspection
+</button>
+
+<button class="bg-red-600 text-white px-4 py-2 rounded w-full">
+Trigger Enforcement
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- Pollution Trend Chart -->
+
+<div class="p-4">
+
+<div class="bg-white p-4 rounded shadow">
+
+<h2 class="font-bold mb-4">
+Pollution Trend (PM2.5)
+</h2>
+
+<canvas id="pollutionChart"></canvas>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+/* MAP */
+
+var map = L.map('map').setView([13.0827,80.2707],12);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+}).addTo(map);
+
+L.marker([13.0878,80.2785])
+.addTo(map)
+.bindPopup("Pollution Hotspot");
+
+
+/* CHART */
+
+const ctx = document.getElementById('pollutionChart');
+
+new Chart(ctx, {
+
+type:'line',
+
+data:{
+labels:[
+'8AM',
+'9AM',
+'10AM',
+'11AM',
+'12PM',
+'1PM',
+'2PM'
+],
+
+datasets:[{
+label:'PM2.5',
+
+data:[80,95,120,142,138,150,160],
+
+borderColor:'red',
+
+fill:false
+
+}]
+
+},
+
+options:{
+responsive:true
+}
+
+});
+
+</script>
+
+</body>
+</html>
